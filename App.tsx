@@ -1,22 +1,18 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import NutriTrainScreen from './src/screens/Auth/NutriTrainScreen';
+import LoginScreen from './src/screens/Auth/LoginScreen'; // Importe o LoginScreen
+import RegisterScreen from './src/screens/Auth/NutriTrainScreen'; // Supondo que você tenha uma tela de registro
 
 const Stack = createStackNavigator();
 
-const App = () => {
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="NutriTrain"
-          component={NutriTrainScreen}
-          options={{ headerShown: false }} // Esconde o cabeçalho
-        />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
-
-export default App;
+}

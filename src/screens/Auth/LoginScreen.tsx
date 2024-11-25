@@ -1,80 +1,81 @@
-import styles from '../../styles/LoginScreen.styles'; 
 import React, { useState } from 'react';
-import { View, Alert } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import InputField from "../../components/InputField";
-import FilledButton from "../../components/FilledButton";
-import UnfilledButton from "../../components/UnfilledButton";
+import { StyleSheet, View, ScrollView, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import Header from '../../components/Header';
+import Input from '../../components/InputField';
+import PrimaryButton from '../../components/PrimaryButton';
+import TextButton from '../../components/TextButton';
+import theme from '../../styles/theme';
 
-// Define os tipos para navegação
-type RootStackParamList = {
-    Login: undefined;
-    Home: undefined;
-    Register: undefined;
-};
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+  const handleLogin = () => {
+    // Lógica de login
+    console.log('Login realizado com:', email, senha);
+  };
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+  const handleRegister = () => {
+    // Navegar para a tela de registro
+    console.log('Navegar para registro');
+  };
 
-    const handleLogin = async () => {
-        if (!email || !password) {
-            Alert.alert('Erro', 'Por favor, preencha todos os campos!');
-            return;
-        }
-
-        try {
-            const response = await fetch('http://localhost:8080/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-            const data = await response.json();
-
-            if (response.ok && data.token) {
-                Alert.alert('Sucesso', 'Login realizado com sucesso!');
-                // Redireciona para a tela principal
-                navigation.navigate('Home');
-            } else {
-                Alert.alert('Erro', 'Credenciais inválidas!');
-            }
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Erro', 'Algo deu errado, tente novamente!');
-        }
-    };
-
-    return (
-        <View style={styles.container}>
-            <InputField
-                placeholder="Email"
-                style={styles.materialUnderlineTextbox1}
-            ></InputField>
-
-            <InputField
-                placeholder="Senha"
-                style={styles.materialUnderlineTextbox12}
-            ></InputField>
-
-            <FilledButton
-                title="Entrar"
-                onPress={handleLogin}
-            ></FilledButton>
-
-            <UnfilledButton
-                caption="Registrar-se"
-                style={styles.materialButtonWithVioletText}
-            ></UnfilledButton>
-
-            <Image
-                source={require("../../../assets/nutritrain_logo.webp")}
-                resizeMode="contain"
-                style={styles.image}
-            ></Image>
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView contentContainerStyle={styles.scrollView}>
+    
+        <View style={styles.logoContainer}>
+          <Image source={require('../../../assets/nutritrain_logo.webp')} style={styles.logo} />
         </View>
-        );
-};
 
-export default LoginScreen;
+        <View style={styles.formContainer}>
+          <Input
+            label="Email"
+            placeholder="Digite seu email"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <Input
+            label="Senha"
+            placeholder="Digite sua senha"
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry
+          />
+          <PrimaryButton title="Entrar" onPress={handleLogin} />
+          <TextButton title="Não tem uma conta? Registre-se" onPress={handleRegister} />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: theme.spacing.medium,
+    paddingTop: theme.spacing.large,
+  },
+  logoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: theme.spacing.large,
+  },
+  logo: {
+    width: 100,  // Ajuste o tamanho conforme necessário
+    height: 100,
+    marginBottom: theme.spacing.medium,
+  },
+  formContainer: {
+    width: '100%',
+    paddingHorizontal: theme.spacing.medium,
+  },
+});
