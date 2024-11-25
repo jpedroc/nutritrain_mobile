@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, KeyboardAvoidingView, Platform, Image } from 'react-native';
-import Header from '../../components/Header';
+import { useNavigation } from '@react-navigation/native';
 import Input from '../../components/InputField';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextButton from '../../components/TextButton';
 import theme from '../../styles/theme';
+import {login} from '../../api/AuthenticationApi';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation(); // Hook de navegação
 
-  const handleLogin = () => {
-    // Lógica de login
-    console.log('Login realizado com:', email, senha);
+  const handleLogin = async () => {
+    setLoading(true);
+    const data = {email: email, password: senha};
+    try {
+        await login(data);
+        navigation.navigate('Home');
+    } catch (error) {
+        console.log(error);
+    }
   };
 
   const handleRegister = () => {
