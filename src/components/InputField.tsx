@@ -1,38 +1,50 @@
-import React, { Component } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import React from 'react';
+import { StyleSheet, TextInput, View, Text } from 'react-native';
+import theme from '../styles/theme';
 
-function InputField(props) {
+interface InputProps {
+  label?: string;
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  secureTextEntry?: boolean;
+}
+
+const Input = ({ label, placeholder, value, onChangeText, secureTextEntry }: InputProps) => {
   return (
-    <View style={[styles.container, props.style]}>
+    <View style={styles.container}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
-        placeholder={props.placeholder}
-        value={props.value}
-        onChangeText={props.onChangeText}
-        style={styles.inputStyle}
-        autoCapitalize="none"
-      ></TextInput>
+        style={styles.input}
+        placeholder={placeholder}
+        placeholderTextColor={theme.colors.muted}
+        value={value}
+        onChangeText={onChangeText}
+        secureTextEntry={secureTextEntry}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: 1,
-    borderColor: "#D9D5DC",
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    alignItems: "center"
+    marginVertical: theme.spacing.medium,
   },
-  inputStyle: {
-    color: "#000",
-    paddingRight: 5,
-    fontSize: 16,
-    alignSelf: "stretch",
-    flex: 1,
-    lineHeight: 16,
-    paddingTop: 16,
-    paddingBottom: 8
-  }
+  label: {
+    color: theme.colors.text,
+    fontSize: theme.fontSizes.medium,
+    marginBottom: theme.spacing.small,
+  },
+  input: {
+    backgroundColor: theme.colors.secondary,
+    color: theme.colors.text,
+    fontSize: theme.fontSizes.medium,
+    paddingVertical: theme.spacing.small,
+    paddingHorizontal: theme.spacing.medium,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+  },
 });
 
-export default InputField;
+export default Input;
