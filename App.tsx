@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './src/screens/Auth/LoginScreen'; // Importe o LoginScreen
-import NutriTrainScreen from './src/screens/Auth/NutriTrainScreen'; // Supondo que você tenha uma tela de registro
+import LoginScreen from './src/screens/User/LoginScreen'; // Importe o LoginScreen
+import NutriTrainScreen from './src/screens/User/NutriTrainScreen'; // Supondo que você tenha uma tela de registro
 
 const Stack = createStackNavigator();
 

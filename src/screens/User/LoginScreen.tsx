@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, KeyboardAvoidingView, Platform, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Input from '../../components/InputField';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextButton from '../../components/TextButton';
 import theme from '../../styles/theme';
-import {login} from '../../api/AuthenticationApi';
+import { login } from '../../api/AuthenticationApi';
+import { LoginDTO } from '../../models/LoginDTO';
+import { storeToken } from '../../utils/TokenStorage';
+import { Alert } from 'react-native';
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [loading, setLoading] = useState(false);
-  const navigation = useNavigation(); // Hook de navegação
+  const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    setLoading(true);
-    const data = {email: email, password: senha};
+    const data: LoginDTO = { email, password };
     try {
-        await login(data);
-        navigation.navigate('Home');
+      const token = await login(data);
+      await storeToken(token);
+      navigation.navigate('Home');
     } catch (error) {
-        console.log(error);
+      console.log(error);
+      Alert.alert('Erro ao fazer login', 'Verifique suas credenciais.');
     }
   };
 
@@ -35,7 +36,7 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
-    
+
         <View style={styles.logoContainer}>
           <Image source={require('../../../assets/nutritrain_logo.webp')} style={styles.logo} />
         </View>
@@ -50,8 +51,8 @@ export default function LoginScreen() {
           <Input
             label="Senha"
             placeholder="Digite sua senha"
-            value={senha}
-            onChangeText={setSenha}
+            value={password}
+            onChangeText={setPassword}
             secureTextEntry
           />
           <PrimaryButton title="Entrar" onPress={handleLogin} />
@@ -79,8 +80,8 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.large,
   },
   logo: {
-    width: 100,  // Ajuste o tamanho conforme necessário
-    height: 100,
+    width: 120,  // Ajuste o tamanho conforme necessário
+    height: 120,
     marginBottom: theme.spacing.medium,
   },
   formContainer: {
