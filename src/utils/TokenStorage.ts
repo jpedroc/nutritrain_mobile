@@ -18,9 +18,7 @@ export const storeToken = async (data: {id: number, token: string}) => {
 export const getUserId = async () => {
   try {
     const userIdString = await AsyncStorage.getItem(USER_ID_KEY);
-    console.log(userIdString);
     const userId =  userIdString ? Number(userIdString) : null; 
-    console.log(userId);
     return userId;
   } catch (error) {
     console.error('Erro ao obter o token:', error);
@@ -29,9 +27,10 @@ export const getUserId = async () => {
 };
 
 // Obtém o token
-export const getToken = async (): Promise<string | null> => {
+export const getToken = async () => {
   try {
-    return await AsyncStorage.getItem(TOKEN_KEY);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    return token;
   } catch (error) {
     console.error('Erro ao obter o token:', error);
     return null;
