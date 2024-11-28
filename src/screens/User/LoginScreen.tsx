@@ -7,7 +7,6 @@ import theme from '../../styles/theme';
 import { login } from '../../api/AuthenticationApi';
 import { LoginDTO } from '../../models/LoginDTO';
 import { storeToken } from '../../utils/TokenStorage';
-import { Alert } from 'react-native';
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
 	const [email, setEmail] = useState('');
@@ -21,7 +20,6 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
 			navigation.navigate('Home');
 		} catch (error) {
 			console.log(error);
-			Alert.alert('Erro ao fazer login', 'Verifique suas credenciais.');
 		}
 	};
 

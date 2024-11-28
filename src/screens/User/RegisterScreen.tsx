@@ -44,12 +44,7 @@ export default function RegisterScreen({ navigation }: { navigation: any }) {
             .then(() => {
                 navigation.navigate('Login')
                 Alert.alert('Registro realizado com sucesso!');
-            })
-            .catch(error => {
-                console.error(error);
-                Alert.alert(error.message)
             });
-       
     };
 
     return (
