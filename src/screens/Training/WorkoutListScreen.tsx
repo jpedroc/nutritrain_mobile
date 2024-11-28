@@ -1,31 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, ScrollView, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getTrainerWorkouts } from '../../api/WorkoutApi';
 import { styles } from '../../styles/styles';
 import { WorkoutListDTO } from '../../models/WorkoutListDTO';
 import theme from '../../styles/theme';
 import SecundaryButton from '../../components/SecundaryButton';
+import { ProfessionalInfoDTO } from '../../models/ProfessionalInfoDTO';
+import ProfessionalInfo from '../../components/ProfessionalInfo';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/WorkoutType';
+
+type WorkoutListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'WorkoutDetails'>;
 
 const WorkoutListScreen = () => {
     const [workouts, setWorkouts] = useState<WorkoutListDTO[]>([]);
     const [loading, setLoading] = useState(false); // Estado para controle de carregamento
     const [page, setPage] = useState(0); // Estado para controlar a página
     const [hasMore, setHasMore] = useState(true); // Controle se há mais páginas para carregar
-    const [trainer, setTrainer] = useState({
-        photoUrl: 'https://www.example.com/photo.jpg', // Foto de exemplo
-        name: 'John Doe',
-        registrationNumber: '123456',
-    });
-
-    const navigation = useNavigation();
+    const [trainer, setTrainer] = useState<ProfessionalInfoDTO>(
+        {
+            name: 'John Doe',
+            photo: 'https://www.example.com/photo.jpg', // Foto de exemplo
+            registration: '123456'
+        }
+    );
+    const navigation = useNavigation<WorkoutListScreenNavigationProp>();
 
     // Buscar treinos
     useEffect(() => {
         loadWorkouts(page);
     }, [page]);
 
-    const loadWorkouts = async(pageNumber: number) => {
+    const loadWorkouts = async (pageNumber: number) => {
         setLoading(true);
         try {
             const response = await getTrainerWorkouts(pageNumber, 10); // Função para buscar os treinos
@@ -44,17 +51,28 @@ const WorkoutListScreen = () => {
         // Aqui você pode enviar uma requisição para atualizar o status do treino no backend
     };
 
+    const toDetails = (item: WorkoutListDTO) => {
+        navigation.navigate('WorkoutDetails', {
+            workoutId: item.id,
+            workoutName: item.name,
+            workoutDate: item.workoutDate,
+            trainer: trainer
+        });
+    };
+
     const renderItem = ({ item }) => (
-        <View style={stylesWorkout.card}>
-            <Text style={stylesWorkout.workoutName}>{item.name}</Text>
-            <Text>Data: {new Date(item.workoutDate).toLocaleDateString()}</Text>
-            <View style={stylesWorkout.buttonContainer}>
-                <SecundaryButton
-                    title="Ta pago!"
-                    onPress={() => handleWorkoutDone(item.id)}
-                />
+        <TouchableOpacity onPress={() => toDetails(item)}>
+            <View style={stylesWorkout.card}>
+                <Text style={stylesWorkout.workoutName}>{item.name}</Text>
+                <Text>Data: {new Date(item.workoutDate).toLocaleDateString()}</Text>
+                <View style={stylesWorkout.buttonContainer}>
+                    <SecundaryButton
+                        title="Ta pago!"
+                        onPress={() => handleWorkoutDone(item.id)}
+                    />
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     // Função para carregar mais dados quando o usuário rolar para baixo
@@ -66,14 +84,7 @@ const WorkoutListScreen = () => {
 
     return (
         <View style={styles.content}>
-            <View style={styles.profileContainer}>
-                <Image
-                    source={{ uri: trainer.photoUrl }} // Substitua pela URL real da foto do aluno
-                    style={styles.profileImage}
-                />
-                <Text style={styles.name}>{trainer.name}</Text>
-                <Text style={styles.objective}>Número de Registro: {trainer.registrationNumber}</Text>
-            </View>
+            <ProfessionalInfo professional={trainer} />
 
             <FlatList
                 data={workouts}

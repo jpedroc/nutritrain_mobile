@@ -7,6 +7,7 @@ import LoginScreen from './src/screens/User/LoginScreen';
 import RegisterScreen from './src/screens/User/RegisterScreen';
 import WorkoutListScreen from './src/screens/Training/WorkoutListScreen';
 import HomeScreen from './src/screens/User/HomeScreen';
+import WorkoutDetailsScreen from './src/screens/Training/WorkoutDetailsScreen';
 
 // Importando suas telas
 
@@ -36,13 +37,17 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: true }} // Ocultar o header
         />
         {/* Para outras telas, o header estará visível */}
         <Stack.Screen
           name="WorkoutList"
           component={WorkoutListScreen}
           options={{ title: 'Lista de Treinos' }} // Título da tela
+        />
+
+        <Stack.Screen
+          name="WorkoutDetails"
+          component={WorkoutDetailsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
