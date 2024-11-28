@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
     marginVertical: theme.spacing.medium,
   },
   label: {
-    color: theme.colors.text,
+    color: theme.colors.label,
     fontSize: theme.fontSizes.medium,
     marginBottom: theme.spacing.small,
   },
   input: {
     backgroundColor: theme.colors.secondary,
-    color: theme.colors.text,
+    color: theme.colors.label,
     fontSize: theme.fontSizes.medium,
     paddingVertical: theme.spacing.small,
     paddingHorizontal: theme.spacing.medium,

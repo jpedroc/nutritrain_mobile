@@ -4,7 +4,7 @@ import api from '../utils/BaseApi';
 
 const AUTHENTICATION_URL = "/auth";
 
-export const login = async (data: LoginDTO): Promise<string> => {
+export const login = async (data: LoginDTO): Promise<{userId: number, token: string}> => {
 	try {
 		const response = await api.post(AUTHENTICATION_URL + '/login', data);
 		return response.data;

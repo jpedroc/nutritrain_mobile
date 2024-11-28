@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     label: {
-        color: theme.colors.text,
+        color: theme.colors.label,
         fontSize: theme.fontSizes.medium,
         marginBottom: theme.spacing.small,
     },
     input: {
         backgroundColor: theme.colors.secondary,
-        color: theme.colors.text,
+        color: theme.colors.label,
         fontSize: theme.fontSizes.medium,
         paddingVertical: theme.spacing.small,
         paddingHorizontal: theme.spacing.medium,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontSize: 16,
-        color: theme.colors.text,
+        color: theme.colors.label,
     },
 });
 
