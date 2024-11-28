@@ -1,16 +1,31 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import theme from '../styles/theme';
+import { removeToken } from '../utils/TokenStorage';
+import { useNavigation } from '@react-navigation/native';
 
-interface HeaderProps {
-  logo: any; // A logo será passada como prop (importada como imagem)
-}
+const Header = () => {
+  const navigation = useNavigation();
 
-const Header = ({ logo }: HeaderProps) => {
+  const handleLogout = async () => {
+    try {
+      await removeToken(); // Remove o token e outros dados salvos
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }], // Redireciona para a tela de login
+      });
+    } catch (error) {
+      console.error('Erro ao deslogar:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
+      <Image source={require('../../assets/nutritrain_logo.webp')} style={styles.logo} />
       <Text style={styles.title}>NutriTrain</Text>
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Text style={styles.logoutText}>Sair</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -23,8 +38,8 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.background,
+    justifyContent: 'space-between',
+    backgroundColor: theme.colors.primary,
     padding: theme.spacing.medium,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.primary,
@@ -36,8 +51,17 @@ const styles = StyleSheet.create({
     marginRight: theme.spacing.small,
   },
   title: {
-    color: theme.colors.primary,
+    color: theme.colors.text,
     fontSize: theme.fontSizes.large,
+    fontWeight: 'bold',
+  },
+  logoutButton: {
+    padding: 8,
+    backgroundColor: '#D32F2F', // Vermelho para indicar logout
+    borderRadius: 5,
+  },
+  logoutText: {
+    color: theme.colors.text,
     fontWeight: 'bold',
   },
 });

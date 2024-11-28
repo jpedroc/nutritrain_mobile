@@ -11,7 +11,7 @@ interface TextButtonProps {
 const TextButton = ({ title, onPress, color }: TextButtonProps) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
-      <Text style={[styles.text, { color: color || theme.colors.primary }]}>
+      <Text style={[styles.text, { color: color || theme.colors.secondary }]}>
         {title}
       </Text>
     </TouchableOpacity>

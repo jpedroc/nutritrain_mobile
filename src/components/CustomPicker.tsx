@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
-    color: theme.colors.text,
+    color: theme.colors.label,
     fontSize: theme.fontSizes.medium,
     marginBottom: theme.spacing.small,
   },
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     width: '100%',
-    color: theme.colors.text
+    color: theme.colors.label
   },
 });
 

@@ -1,10 +1,11 @@
 const theme = {
 	colors: {
-		primary: '#4A90E2', // Azul
-		secondary: '#9B59B6 ', // Roxo
-		background: '#121212', // Preto
-		text: '#FFFFFF', // Branco para contraste
-		muted: '#A6A6A6', // Cinza claro para elementos secundários
+		primary: '#3A6EA5', // Azul
+		secondary: '#6e37a1 ', // Roxo
+		text: '#fff', // Branco para contraste
+		label: '#000000', // Branco para contraste
+		background: '#a9a7ab',
+		muted: '#757575', // Cinza claro para elementos secundários
 	},
 	spacing: {
 		small: 8,
