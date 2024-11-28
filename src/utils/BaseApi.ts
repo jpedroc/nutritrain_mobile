@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { getToken } from './TokenStorage';
+import { getToken, removeToken } from './TokenStorage';
+import { Alert } from 'react-native';
 
 const api = axios.create({
   baseURL: 'http://192.168.0.156:8080', // Substitua pela URL do seu backend
@@ -8,6 +9,7 @@ const api = axios.create({
   }
 });
 
+// token interceptor
 api.interceptors.request.use(
   async (config) => {
     const token = await getToken();
@@ -18,6 +20,25 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
+  }
+);
+
+// error interceptor /*
+api.interceptors.response.use(
+  (response) => response, // Passa a resposta se não houver erro
+  (error) => {
+    if (axios.isAxiosError(error) && error.response) {
+      if(error.response.data.status == 401) {
+        removeToken();
+      }
+
+      const { message } = error.response.data;
+      // Exibir mensagem de erro vinda do backend
+      Alert.alert('Erro', message || 'Erro desconhecido.');
+    } else {
+      Alert.alert('Erro', 'Algo deu errado. Tente novamente.');
+    }
+    return Promise.reject(error); // Rejeita para tratamento posterior, se necessário
   }
 );
 
