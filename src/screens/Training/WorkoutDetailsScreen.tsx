@@ -6,8 +6,8 @@ import ProfessionalInfo from '../../components/ProfessionalInfo';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/WorkoutType';
 import { styles } from '../../styles/styles';
-import { Video } from 'expo-av';
-
+import PrimaryButton from '../../components/PrimaryButton';
+import VideoModal from '../../components/VideoPlayer';
 
 type WorkoutDetailsRouteProp = RouteProp<RootStackParamList, 'WorkoutDetails'>;
 
@@ -15,6 +15,13 @@ const WorkoutDetailsScreen = () => {
     const route = useRoute<WorkoutDetailsRouteProp>();
     const { workoutName, workoutDate, workoutId, trainer } = route.params;
     const [exercises, setExercises] = useState<WorkoutDetailDTO[]>([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [currentVideoUri, setCurrentVideoUri] = useState('');
+
+    const handleOpenVideo = (videoUri: string) => {
+        setCurrentVideoUri(videoUri);
+        setModalVisible(true);
+    };
 
     useEffect(() => {
         const fetchWorkoutDetails = async () => {
@@ -34,16 +41,7 @@ const WorkoutDetailsScreen = () => {
             <Text style={stylesDetail.exerciseName}>{item.name}</Text>
             <Text>Series: {item.series} | Repetições: {item.repetitions} | Carga: {item.load} kg</Text>
             <Text>Observações: {item.observations || 'Nenhuma'}</Text>
-            <Video
-                source={{ uri: item.videoUrl }}
-                rate={1.0}
-                volume={1.0}
-                isMuted={false}
-                resizeMode="contain"
-                shouldPlay={false}
-                style={stylesDetail.video}
-                useNativeControls
-            />
+            <PrimaryButton title="Ver execução" onPress={() => handleOpenVideo(item.execution)} />
         </View>
     );
 
@@ -59,6 +57,11 @@ const WorkoutDetailsScreen = () => {
                 keyExtractor={(item) => String(item.id)}
                 renderItem={renderExercise}
                 contentContainerStyle={stylesDetail.listContent}
+            />
+            <VideoModal
+                isVisible={modalVisible}
+                onClose={() => setModalVisible(false)}
+                videoUri={currentVideoUri}
             />
         </View>
     );

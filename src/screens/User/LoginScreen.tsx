@@ -6,7 +6,7 @@ import TextButton from '../../components/TextButton';
 import theme from '../../styles/theme';
 import { isAuthenticated, login } from '../../api/AuthenticationApi';
 import { LoginDTO } from '../../models/LoginDTO';
-import { getToken, getUserId, storeToken } from '../../utils/TokenStorage';
+import { getToken, storeToken } from '../../utils/TokenStorage';
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
 	const [email, setEmail] = useState('');

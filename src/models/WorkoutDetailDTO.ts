@@ -5,5 +5,5 @@ export interface WorkoutDetailDTO {
     repetitions: number,
     load: number,
     observations: string,
-    videoUrl: string
+    execution?: string
 }
