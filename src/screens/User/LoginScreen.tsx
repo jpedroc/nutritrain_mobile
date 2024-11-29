@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import Input from '../../components/InputField';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextButton from '../../components/TextButton';
 import theme from '../../styles/theme';
-import { login } from '../../api/AuthenticationApi';
+import { isAuthenticated, login } from '../../api/AuthenticationApi';
 import { LoginDTO } from '../../models/LoginDTO';
-import { storeToken } from '../../utils/TokenStorage';
+import { getToken, storeToken } from '../../utils/TokenStorage';
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
 	const [email, setEmail] = useState('');
@@ -26,6 +26,17 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
 	const handleRegister = () => {
 		navigation.navigate('Register');
 	};
+
+	useEffect(() => {
+		isAuthenticatedUser();
+
+	}, []);
+
+	const isAuthenticatedUser = async () => {
+		const token = await getToken();
+		isAuthenticated(token)
+			.then(response => response && navigation.navigate('Home'))
+	}
 
 	return (
 		<KeyboardAvoidingView

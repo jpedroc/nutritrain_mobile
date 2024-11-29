@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginVertical: 30,
         paddingHorizontal: 20,
-      },
+    },
     profileContainer: {
         alignItems: 'center',
         marginVertical: 20,
@@ -85,5 +85,15 @@ export const styles = StyleSheet.create({
     content: {
         paddingTop: 100, // Espaço para evitar sobreposição
         flex: 1
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    },
+    video: {
+        width: '90%',
+        height: 300,
     },
 })
