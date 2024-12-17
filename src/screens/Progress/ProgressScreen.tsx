@@ -5,7 +5,6 @@ import { Dimensions } from 'react-native';
 import { ProgressChartDTO } from '../../models/ProgressChartDTO';
 import { getProgressChart, getProgressInfo } from '../../api/ProgressApi';
 import { styles } from '../../styles/styles';
-import { FlatList } from 'react-native-gesture-handler';
 import { ProgressInfoDTO } from '../../models/ProgressInfoDTO';
 
 const screenWidth = Dimensions.get('window').width;
@@ -32,15 +31,6 @@ export const ProgressScreen = () => {
             setLoading(false);
         }
     };
-
-    const renderProgressInfo = ({ item }: { item: ProgressInfoDTO }) => (
-        <View style={stylesDetail.progressInfoItem}>
-            <Text>{`Data: ${item.date}`}</Text>
-            <Text>{`Peso: ${item.weight.toFixed(2)} kg`}</Text>
-            <Text>{`% Gordura: ${item.bodyFatPercentage.toFixed(2)}%`}</Text>
-            <Text>{`Massa Magra: ${item.leanMass.toFixed(2)} kg`}</Text>
-        </View>
-    );
 
     if (!progressChart) {
         return <Text>Carregando dados de progresso...</Text>;

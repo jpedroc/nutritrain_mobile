@@ -6,31 +6,39 @@ import { styles } from '../../styles/styles';
 import { WorkoutListDTO } from '../../models/WorkoutListDTO';
 import theme from '../../styles/theme';
 import SecundaryButton from '../../components/SecundaryButton';
-import { ProfessionalInfoDTO } from '../../models/ProfessionalInfoDTO';
-import ProfessionalInfo from '../../components/ProfessionalInfo';
+import { ProfilelInfoDTO } from '../../models/ProfessionalInfoDTO';
+import ProfileInfo from '../../components/ProfilelInfo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/WorkoutType';
+import { getProfile } from '../../api/AuthenticationApi';
+import { UserType } from '../../models/UserDTO';
 
 type WorkoutListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'WorkoutDetails'>;
 
 const WorkoutListScreen = () => {
     const [workouts, setWorkouts] = useState<WorkoutListDTO[]>([]);
-    const [loading, setLoading] = useState(false); // Estado para controle de carregamento
-    const [page, setPage] = useState(0); // Estado para controlar a página
-    const [hasMore, setHasMore] = useState(true); // Controle se há mais páginas para carregar
-    const [trainer, setTrainer] = useState<ProfessionalInfoDTO>(
-        {
-            name: 'John Doe',
-            photo: 'https://www.example.com/photo.jpg', // Foto de exemplo
-            registration: '123456'
-        }
-    );
+    const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const [trainer, setTrainer] = useState<ProfilelInfoDTO | null>(null);
     const navigation = useNavigation<WorkoutListScreenNavigationProp>();
 
-    // Buscar treinos
     useEffect(() => {
         loadWorkouts(page);
+        fetchPersonaInfo();
     }, [page]);
+
+    const fetchPersonaInfo = async () => {
+        setLoading(true);
+        try {
+            const response = await getProfile(UserType.PERSONAL);
+            setTrainer(response);
+        } catch (error) {
+            console.error('Error fetching personal profile info', error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     const loadWorkouts = async (pageNumber: number) => {
         setLoading(true);
@@ -84,7 +92,7 @@ const WorkoutListScreen = () => {
 
     return (
         <View style={styles.content}>
-            <ProfessionalInfo professional={trainer} />
+            <ProfileInfo profile={trainer} />
 
             <FlatList
                 data={workouts}

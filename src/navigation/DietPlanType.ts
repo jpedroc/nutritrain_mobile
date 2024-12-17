@@ -1,10 +1,10 @@
-import { ProfessionalInfoDTO } from "../models/ProfessionalInfoDTO";
+import { ProfilelInfoDTO } from "../models/ProfessionalInfoDTO";
 
 export type DietPlanRootStackParamList = {
     DietPlanList: undefined;
     DietPlanDetail: {
         dietId: number;
         dietDescription: string;
-        trainer: ProfessionalInfoDTO;
+        trainer: ProfilelInfoDTO | null;
     };
 };

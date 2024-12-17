@@ -1,6 +1,6 @@
 // src/navigation/types.ts
 
-import { ProfessionalInfoDTO } from "../models/ProfessionalInfoDTO";
+import { ProfilelInfoDTO } from "../models/ProfessionalInfoDTO";
 
 export type RootStackParamList = {
     WorkoutList: undefined;
@@ -8,7 +8,7 @@ export type RootStackParamList = {
       workoutId: number;
       workoutName: string;
       workoutDate: string;
-      trainer: ProfessionalInfoDTO; // Substitua pelo seu DTO correto
+      trainer: ProfilelInfoDTO | null; // Substitua pelo seu DTO correto
     };
   };
   

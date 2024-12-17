@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { getWorkoutDetail } from '../../api/WorkoutApi';
 import { WorkoutDetailDTO } from '../../models/WorkoutDetailDTO';
-import ProfessionalInfo from '../../components/ProfessionalInfo';
+import ProfileInfo from '../../components/ProfilelInfo';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/WorkoutType';
 import { styles } from '../../styles/styles';
@@ -47,7 +47,7 @@ const WorkoutDetailsScreen = () => {
 
     return (
         <View style={styles.content}>
-            <ProfessionalInfo professional={trainer} />
+            <ProfileInfo professional={trainer} />
             <View style={stylesDetail.workoutInfo}>
                 <Text style={stylesDetail.workoutName}>{workoutName}</Text>
                 <Text style={stylesDetail.workoutDate}>{workoutDate}</Text>
