@@ -1,6 +1,8 @@
 import { LoginDTO } from '../models/LoginDTO';
-import { UserDTO } from '../models/UserDTO';
+import { ProfilelInfoDTO } from '../models/ProfessionalInfoDTO';
+import { UserDTO, UserType } from '../models/UserDTO';
 import api from '../utils/BaseApi';
+import { getUserId } from '../utils/TokenStorage';
 
 const AUTHENTICATION_URL = "/auth";
 
@@ -35,4 +37,15 @@ export const isAuthenticated = async (token: string): Promise<boolean> => {
 	} catch (error) {
 		throw error;
 	}
+}
+
+export const getProfile = async(userType: UserType): Promise<ProfilelInfoDTO> => {
+	try {
+		const userId = await getUserId();
+		const response = await api.get(AUTHENTICATION_URL + '/profile', {headers: {'user_id': userId, 'user_type': userType}});
+		return response.data;
+	} catch (error) {
+        console.error('Erro ao perfil do usuário:', error);
+        throw error;
+    }
 }

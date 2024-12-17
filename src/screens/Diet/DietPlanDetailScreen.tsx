@@ -4,7 +4,7 @@ import { Table, Row, Rows } from 'react-native-table-component';
 import { getDietPlanDetail } from '../../api/DietPlanApi'; // Ajuste de acordo com sua função de API
 import { DietPlanDetailDTO, Food, MeasureType } from '../../models/DietPlanDetailDTO'; // Ajuste de acordo com o DTO real
 import { styles } from '../../styles/styles';
-import ProfessionalInfo from '../../components/ProfessionalInfo';
+import ProfileInfo from '../../components/ProfilelInfo';
 
 export const DietPlanDetailScreen = ({ route }: any) => {
     const { dietId, trainer } = route.params;
@@ -49,7 +49,7 @@ export const DietPlanDetailScreen = ({ route }: any) => {
 
     return (
         <ScrollView contentContainerStyle={[styles.content, {flex: 0, flexGrow: 1}]}>
-            <ProfessionalInfo professional={trainer} />
+            <ProfileInfo professional={trainer} />
             <Text style={stylesDetail.title}>Plano de Alimentar: {dietPlan.description}</Text>
 
             {dietPlan.dailyMeals.map((meal, index) => (

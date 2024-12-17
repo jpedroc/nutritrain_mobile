@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ProfessionalInfo from '../../components/ProfessionalInfo';
+import ProfileInfo from '../../components/ProfilelInfo';
 import { styles } from '../../styles/styles';
-import { ProfessionalInfoDTO } from '../../models/ProfessionalInfoDTO';
+import { ProfilelInfoDTO } from '../../models/ProfessionalInfoDTO';
 import { DietPlanRootStackParamList } from '../../navigation/DietPlanType';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { getDietPlans } from '../../api/DietPlanApi';
 import { DietPlanListDTO, StatusEnum } from '../../models/DietPlanListDTO';
+import { UserType } from '../../models/UserDTO';
+import { getProfile } from '../../api/AuthenticationApi';
 
 type DietPlanListScreenNavigationProp = StackNavigationProp<DietPlanRootStackParamList, 'DietPlanDetail'>;
 
@@ -18,15 +20,24 @@ export const DietPlanListScreen = () => {
 	const [page, setPage] = useState(0);
 	const [hasMore, setHasMore] = useState(true);
 	const navigation = useNavigation<DietPlanListScreenNavigationProp>();
-	const [trainer, setTrainer] = useState<ProfessionalInfoDTO>({
-		name: 'John Doe',
-		photo: 'https://www.example.com/photo.jpg',
-		registration: '123456',
-	});
+	const [nutri, setNutri] = useState<ProfilelInfoDTO | null>(null);
 
 	useEffect(() => {
 		fetchMealPlans(page);
+		fetchNutritionistInfo();
 	}, [page]);
+
+	const fetchNutritionistInfo = async () => {
+		setLoading(true);
+		try {
+			const response = await getProfile(UserType.NUTRITIONIST);
+			setNutri(response);
+		} catch (error) {
+			console.error('Error fetching nutritionist profile info', error);
+		} finally {
+			setLoading(false);
+		}
+	}
 
 	const fetchMealPlans = async (pageNumber: number) => {
 		setLoading(true);
@@ -56,7 +67,7 @@ export const DietPlanListScreen = () => {
 		navigation.navigate('DietPlanDetail', {
 			dietId: item.id,
 			dietDescription: item.description,
-			trainer: trainer,
+			trainer: nutri,
 		});
 	};
 
@@ -74,7 +85,7 @@ export const DietPlanListScreen = () => {
 
 	return (
 		<View style={[styles.content, { flex: 0, paddingHorizontal: 16 }]}>
-			<ProfessionalInfo professional={trainer} />
+			<ProfileInfo profile={nutri} />
 			<Text style={stylesDiet.sectionTitle}>Plano alimentar ativo</Text>
 			<FlatList
 				data={activePlans}
