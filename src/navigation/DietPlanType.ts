@@ -2,7 +2,7 @@ import { ProfessionalInfoDTO } from "../models/ProfessionalInfoDTO";
 
 export type DietPlanRootStackParamList = {
     DietPlanList: undefined;
-    DietPlanDetails: {
+    DietPlanDetail: {
         dietId: number;
         dietDescription: string;
         trainer: ProfessionalInfoDTO;
