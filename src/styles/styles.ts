@@ -5,6 +5,9 @@ export const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         backgroundColor: theme.colors.background,
+        paddingHorizontal: 10,
+        paddingTop: 80,
+        paddingBottom: 15
     },
     scrollView: {
         flexGrow: 1,
@@ -83,7 +86,9 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     content: {
-        paddingTop: 100, // Espaço para evitar sobreposição
+        paddingHorizontal: 10,
+        paddingTop: 80,
+        paddingBottom: 15,
         flex: 1
     },
     modalContainer: {

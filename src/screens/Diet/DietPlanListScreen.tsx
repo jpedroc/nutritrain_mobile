@@ -9,7 +9,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { getDietPlans } from '../../api/DietPlanApi';
 import { DietPlanListDTO, StatusEnum } from '../../models/DietPlanListDTO';
 
-type DietPlanListScreenNavigationProp = StackNavigationProp<DietPlanRootStackParamList, 'DietPlanDetails'>;
+type DietPlanListScreenNavigationProp = StackNavigationProp<DietPlanRootStackParamList, 'DietPlanDetail'>;
 
 export const DietPlanListScreen = () => {
 	const [activePlans, setActivePlans] = useState<DietPlanListDTO[]>([]);
@@ -53,7 +53,7 @@ export const DietPlanListScreen = () => {
 	};
 
 	const toDetails = (item: DietPlanListDTO) => {
-		navigation.navigate('DietPlanDetails', {
+		navigation.navigate('DietPlanDetail', {
 			dietId: item.id,
 			dietDescription: item.description,
 			trainer: trainer,

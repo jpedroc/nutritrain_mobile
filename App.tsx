@@ -9,6 +9,7 @@ import WorkoutListScreen from './src/screens/Training/WorkoutListScreen';
 import HomeScreen from './src/screens/User/HomeScreen';
 import WorkoutDetailsScreen from './src/screens/Training/WorkoutDetailsScreen';
 import { DietPlanListScreen } from './src/screens/Diet/DietPlanListScreen';
+import { DietPlanDetailScreen } from './src/screens/Diet/DietPlanDetailScreen';
 
 // Importando suas telas
 
@@ -42,7 +43,7 @@ export default function App() {
         />
 
         {/* Telas de treino */}
-      
+
         <Stack.Screen
           name="WorkoutList"
           component={WorkoutListScreen}
@@ -57,6 +58,11 @@ export default function App() {
         <Stack.Screen
           name="DietPlanList"
           component={DietPlanListScreen}
+        />
+
+        <Stack.Screen
+          name="DietPlanDetail"
+          component={DietPlanDetailScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
