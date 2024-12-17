@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, ScrollView, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getTrainerWorkouts } from '../../api/WorkoutApi';
 import { styles } from '../../styles/styles';
@@ -60,7 +60,7 @@ const WorkoutListScreen = () => {
         });
     };
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }: { item: WorkoutListDTO }) => (
         <TouchableOpacity onPress={() => toDetails(item)}>
             <View style={stylesWorkout.card}>
                 <Text style={stylesWorkout.workoutName}>{item.name}</Text>
@@ -92,7 +92,7 @@ const WorkoutListScreen = () => {
                 renderItem={renderItem}
                 contentContainerStyle={stylesWorkout.workoutList}
                 onEndReached={handleLoadMore} // Chama a função quando o usuário rolar até o final
-                onEndReachedThreshold={1} // Quando chegar a 50% do final da lista
+                onEndReachedThreshold={0.8} // Quando chegar a 50% do final da lista
                 ListFooterComponent={loading ? <ActivityIndicator size="large" /> : null} // Mostrar um loading enquanto carrega
             />
         </View>
