@@ -8,6 +8,7 @@ import RegisterScreen from './src/screens/User/RegisterScreen';
 import WorkoutListScreen from './src/screens/Training/WorkoutListScreen';
 import HomeScreen from './src/screens/User/HomeScreen';
 import WorkoutDetailsScreen from './src/screens/Training/WorkoutDetailsScreen';
+import { DietPlanListScreen } from './src/screens/Diet/DietPlanListScreen';
 
 // Importando suas telas
 
@@ -34,20 +35,28 @@ export default function App() {
           component={RegisterScreen}
           options={{ headerShown: false }} // Ocultar o header
         />
+        {/* Para outras telas, o header estará visível */}
         <Stack.Screen
           name="Home"
           component={HomeScreen}
         />
-        {/* Para outras telas, o header estará visível */}
+
+        {/* Telas de treino */}
+      
         <Stack.Screen
           name="WorkoutList"
           component={WorkoutListScreen}
           options={{ title: 'Lista de Treinos' }} // Título da tela
         />
-
         <Stack.Screen
           name="WorkoutDetails"
           component={WorkoutDetailsScreen}
+        />
+
+        {/* Telas de dieta */}
+        <Stack.Screen
+          name="DietPlanList"
+          component={DietPlanListScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
