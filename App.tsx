@@ -10,6 +10,7 @@ import HomeScreen from './src/screens/User/HomeScreen';
 import WorkoutDetailsScreen from './src/screens/Training/WorkoutDetailsScreen';
 import { DietPlanListScreen } from './src/screens/Diet/DietPlanListScreen';
 import { DietPlanDetailScreen } from './src/screens/Diet/DietPlanDetailScreen';
+import { ProgressScreen } from './src/screens/Progress/ProgressScreen';
 
 // Importando suas telas
 
@@ -63,6 +64,13 @@ export default function App() {
         <Stack.Screen
           name="DietPlanDetail"
           component={DietPlanDetailScreen}
+        />
+
+        {/* Telas de progresso */}
+        <Stack.Screen
+          name="Progress"
+          component={ProgressScreen}
+          options={{ title: 'Seu progresso' }} // Título da tela
         />
       </Stack.Navigator>
     </NavigationContainer>
